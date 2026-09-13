@@ -5,7 +5,6 @@ import com.udea.lab12026p.entity.Customer;
 import com.udea.lab12026p.entity.Transaction;
 import com.udea.lab12026p.repository.CustomerRepository;
 import com.udea.lab12026p.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +12,14 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionService {
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository; // Para validar cuentas
+    private final CustomerRepository customerRepository;
+
+    TransactionService(CustomerRepository customerRepository, TransactionRepository transactionRepository) {
+        this.customerRepository = customerRepository;
+        this.transactionRepository = transactionRepository;
+    } // Para validar cuentas
 
     public TransactionDTO transferMoney(TransactionDTO transactionDTO) {
         // Validar que los números de cuenta no sean nulos
