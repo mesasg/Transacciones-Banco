@@ -80,3 +80,11 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/transacciones-banco:latest  
+
+  deploy:
+    name: Deploy to Render
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
